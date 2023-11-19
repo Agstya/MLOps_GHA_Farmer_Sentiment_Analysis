@@ -11,7 +11,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn.impute import SimpleImputer
 
-df = pd.read_csv("data_processed.csv")
+df = pd.read_csv("data/processed/data_processed.csv")
 
 #### Get features ready to model! 
 y = df.pop("cons_general").to_numpy()
@@ -37,7 +37,7 @@ specificity = tn / (tn+fp)
 sensitivity = tp / (tp + fn)
 
 # Now print to file
-with open("metrics.json", 'w') as outfile:
+with open("data/metrics/metrics.json", 'w') as outfile:
         json.dump({ "accuracy": acc, "specificity": specificity, "sensitivity":sensitivity}, outfile)
 
 # Let's visualize within several slices of the dataset
@@ -50,4 +50,4 @@ df['pred_accuracy'] = score_int
 sns.set_color_codes("dark")
 ax = sns.barplot(x="region", y="pred_accuracy", data=df, palette = "Greens_d")
 ax.set(xlabel="Region", ylabel = "Model accuracy")
-plt.savefig("by_region.png",dpi=80)
+plt.savefig("data/metrics/by_region.png",dpi=80)
