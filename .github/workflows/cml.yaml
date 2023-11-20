@@ -29,16 +29,16 @@ jobs:
         run: |
           # Your ML Workflow goes here
           pip install -r requirements.txt
-          python src/get_data.py
+          # python src/get_data.py
           python src/process_data.py
           python model/train.py
 
           echo "##MODEL METRICS" > report.md
-          cat metrics/metrics.json >> report.md
+          cat data/metrics/metrics.json >> report.md
 
           echo "##Data VIZ" >> report.md
 
-          cml-publish metrics/by_region.png --md >> report.md
+          cml-publish data/metrics/by_region.png --md >> report.md
           # cml-publish residuals.png --md >> report.md
 
           cml-send-comment report.md
