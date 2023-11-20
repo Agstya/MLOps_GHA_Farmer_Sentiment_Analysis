@@ -1,0 +1,46 @@
+name: model-farmers-sentiment-analysis-workflow
+# on: [push]
+on: 
+  push:
+    branches:
+      - main
+      - 'experiment*'
+      - 'releases/*'
+  pull_request: 
+    branches:
+      - main
+      - 'experiment*'
+      - 'releases/*'
+    
+  # label:
+  #    types: [created, edited]
+     
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: [ubuntu-latest]
+    container: docker://dvcorg/cml-py3:latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: clm_run
+        env:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Your ML Workflow goes here
+          pip install -r requirements.txt
+          # python src/get_data.py
+          python src/process_data.py
+          python model/train.py
+
+          echo "##MODEL METRICS" > report.md
+          cat data/metrics/metrics.json >> report.md
+
+          echo "##Data VIZ" >> report.md
+
+          cml-publish data/metrics/by_region.png --md >> report.md
+          # cml-publish residuals.png --md >> report.md
+
+          cml-send-comment report.md
+
+          

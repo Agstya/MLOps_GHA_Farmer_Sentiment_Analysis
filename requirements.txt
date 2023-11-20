@@ -1,5 +1,8 @@
 wget
-sklearn
+scikit-learn
 pandas
 seaborn
 matplotlib
+requests
+# dvc 
+# cml 
