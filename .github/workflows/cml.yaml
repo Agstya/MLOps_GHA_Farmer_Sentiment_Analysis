@@ -29,7 +29,7 @@ jobs:
         run: |
           # Your ML Workflow goes here
           pip install -r requirements.txt
-          python src/get_data.py
+          # python src/get_data.py
           python src/process_data.py
           python model/train.py
 
