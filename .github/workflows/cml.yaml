@@ -38,7 +38,7 @@ jobs:
 
           echo "##Data VIZ" >> report.md
 
-          cml-publish data/metrics/by_region.png --md >> report.md
+          # cml-publish data/metrics/by_region.png --md >> report.md
           # cml-publish residuals.png --md >> report.md
 
           cml-send-comment report.md
